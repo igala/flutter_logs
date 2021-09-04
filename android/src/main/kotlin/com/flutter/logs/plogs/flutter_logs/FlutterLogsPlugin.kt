@@ -3,7 +3,6 @@ package com.flutter.logs.plogs.flutter_logs
 import android.app.Activity
 import android.content.Context
 import android.util.Log
-import androidx.annotation.NonNull
 import com.blackbox.plog.pLogs.PLog
 import com.blackbox.plog.pLogs.models.LogLevel
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -20,7 +19,7 @@ import io.reactivex.schedulers.Schedulers
 
 class FlutterLogsPlugin : FlutterPlugin, ActivityAware {
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onAttachedToEngine( flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         binaryMessenger = flutterPluginBinding.binaryMessenger
         setUpPluginMethods(flutterPluginBinding.applicationContext, flutterPluginBinding.binaryMessenger)
     }
@@ -351,7 +350,7 @@ class FlutterLogsPlugin : FlutterPlugin, ActivityAware {
         
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine( binding: FlutterPlugin.FlutterPluginBinding) {
         currentActivity = null
         channel?.setMethodCallHandler(null)
         event_channel?.setStreamHandler(null)

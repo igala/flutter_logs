@@ -47,8 +47,8 @@ class FlutterLogs {
   static const MethodChannel channel = const MethodChannel('flutter_logs');
 
   static Future<String> initLogs(
-      {List<LogLevel>? logLevelsEnabled,
-      List<String>? logTypesEnabled,
+      {List<LogLevel> logLevelsEnabled,
+      List<String> logTypesEnabled,
       int logsRetentionPeriodInDays = 14,
       int zipsRetentionPeriodInDays = 3,
       bool autoDeleteZipOnExport = false,
@@ -56,14 +56,14 @@ class FlutterLogs {
       bool autoExportErrors = true,
       bool encryptionEnabled = false,
       String encryptionKey = "",
-      required DirectoryStructure directoryStructure,
+      DirectoryStructure directoryStructure,
       bool logSystemCrashes = true,
       bool isDebuggable = true,
       bool debugFileOperations = true,
       bool attachTimeStamp = true,
       bool attachNoOfFiles = true,
-      required TimeStampFormat timeStampFormat,
-      required LogFileExtension logFileExtension,
+      TimeStampFormat timeStampFormat,
+      LogFileExtension logFileExtension,
       bool zipFilesOnly = false,
       String logsWriteDirectoryName = "",
       String logsExportZipFileName = "",
@@ -106,7 +106,7 @@ class FlutterLogs {
     return result;
   }
 
-  static Future<String?> initMQTT(
+  static Future<String> initMQTT(
       {String topic = "",
       String brokerUrl = "",
       String certificate = "",
@@ -189,8 +189,8 @@ class FlutterLogs {
       String subTag = "",
       String logMessage = "",
       LogLevel level = LogLevel.INFO,
-      Exception? exception,
-      Error? error,
+      Exception exception,
+      Error error,
       String errorMessage = ""}) async {
     if (exception != null) {
       final String result =

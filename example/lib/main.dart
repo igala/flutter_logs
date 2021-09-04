@@ -119,7 +119,7 @@ class _MyAppState extends State<MyApp> {
                   onPressed: () async {
                     // Export and then get File Reference
                     await exportAllLogs().then((value) async {
-                      Directory? externalDirectory;
+                      Directory externalDirectory;
 
                       if (Platform.isIOS) {
                         externalDirectory =
@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
                       FlutterLogs.logInfo(
                           _tag, "found", 'External Storage:$externalDirectory');
 
-                      File file = File("${externalDirectory!.path}/$value");
+                      File file = File("${externalDirectory.path}/$value");
 
                       FlutterLogs.logInfo(
                           _tag, "path", 'Path: \n${file.path.toString()}');
@@ -220,7 +220,7 @@ class _MyAppState extends State<MyApp> {
         initialDelaySecondsForPublishing: 10);
   }
 
-  void logData({required bool isException}) {
+  void logData({bool isException}) {
     var logMessage =
         'This is a log message: ${DateTime.now().millisecondsSinceEpoch}';
 
