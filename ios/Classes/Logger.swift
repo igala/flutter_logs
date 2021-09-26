@@ -17,15 +17,16 @@ public struct ConsoleOutput: Output {
     private var queue: DispatchQueue
     
     public init() {
-        self.queue = DispatchQueue(label: "Console output")
+        self.queue = DispatchQueue(label: "Console output", qos: .background)
     }
     
     public func process(_ string: String) {
-        queue.sync {
+        queue.async {
             Swift.print(string)
         }
+        }
     }
-}
+
 
 public class FileOutput: Output {
     var filePath: String
@@ -34,7 +35,7 @@ public class FileOutput: Output {
     
     public init(filePath: String) {
         self.filePath = filePath
-        self.queue = DispatchQueue(label: "File output")
+        self.queue = DispatchQueue(label: "File output",qos: .background)
     }
     
     deinit {
@@ -42,7 +43,7 @@ public class FileOutput: Output {
     }
     
     public func process(_ string: String) {
-        queue.sync(execute: {
+        queue.async {
             [weak self] in
             if let file = self?.getFileHandle() {
                 let printed = string + "\n"
@@ -51,7 +52,8 @@ public class FileOutput: Output {
                     file.write(data)
                 }
             }
-        })
+        
+    }
     }
     
     
