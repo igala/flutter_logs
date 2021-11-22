@@ -6,6 +6,7 @@
 
 import Foundation
 import ZIPFoundation
+import CocoaLumberjack
 
 class LogHelper: NSObject {
     
@@ -19,7 +20,30 @@ class LogHelper: NSObject {
     }
     
     static func initLogs(result: @escaping FlutterResult){
-        print("initLogs")
+         Swift.print("initLogs")
+       
+        guard let dirURL = Logging.defaultLogsDirectoryURL() else {
+            Swift.print("Logs directory not found")
+            return
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "y-MM"
+        
+        let fileName = "Log-\(dateFormatter.string(from: Date())).txt"
+        let fileManager = BaseLogFileManager(fileName: fileName,directory: dirURL.path)
+        let fileLogger: DDFileLogger = DDFileLogger(logFileManager: fileManager) // File Logger
+        fileLogger.rollingFrequency = 60 * 60 * 24 // 24 hours
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 7
+        
+        DDLog.add(fileLogger)// Uses os_log
+        if #available(iOS 10.0, *) {
+            let logger = DDOSLogger.sharedInstance
+            DDLog.add(logger, with: DDLogLevel.all)
+        } else {
+            // Fallback on earlier versions
+        }
+       Swift.print("done init logs success with directory \(dirURL.path)")
+       
         
     }
     
@@ -58,9 +82,12 @@ class LogHelper: NSObject {
         
         let fileName = "Log-\(dateFormatter.string(from: Date()))"
         let fileURL = dirURL.appendingPathComponent(fileName).appendingPathExtension("txt")
-        let output = FileOutput(filePath: fileURL.path)
-        Logger.sharedInstance.addOutput(output)
-        Logger.sharedInstance.log(prefix() + ": " + log)
+//        let output = FileOutput(filePath: fileURL.path)
+//        Logger.sharedInstance.addOutput(output)
+//        Logger.sharedInstance.log(prefix() + ": " + log)
+        
+//        DDLogDebug(log)
+        DDLogDebug(log)
         result(log)
     }
     

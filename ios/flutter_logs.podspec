@@ -16,6 +16,7 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
   s.dependency 'ZIPFoundation'
+  s.dependency 'CocoaLumberjack/Swift'
   s.platform = :ios, '9.0'
 
   # Flutter.framework does not contain a i386 slice.
